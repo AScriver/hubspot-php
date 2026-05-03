@@ -3,10 +3,73 @@
 namespace SevenShores\Hubspot\Endpoints;
 
 /**
- * @see https://developers.hubspot.com/docs/methods/email/email_subscriptions_overview
+ * @see https://developers.hubspot.com/docs/api-reference/legacy/communication-preferences/v3/guide
  */
 class EmailSubscription extends Endpoint
 {
+    /**
+     * Get all subscription definitions for the portal.
+     *
+     * @see https://developers.hubspot.com/docs/api-reference/legacy/communication-preferences/v3/get-subscription-definitions
+     *
+     * @return \SevenShores\Hubspot\Http\Response
+     */
+    public function subscriptionDefinitions()
+    {
+        $endpoint = 'https://api.hubapi.com/communication-preferences/v3/definitions';
+
+        return $this->client->request('get', $endpoint);
+    }
+
+    /**
+     * Get subscription statuses for a contact email address.
+     *
+     * @see https://developers.hubspot.com/docs/api-reference/legacy/communication-preferences/v3/get-subscription-statuses-for-a-contact
+     *
+     * @param string $emailAddress
+     *
+     * @return \SevenShores\Hubspot\Http\Response
+     */
+    public function subscriptionStatuses($emailAddress)
+    {
+        $emailAddress = url_encode($emailAddress);
+        $endpoint = "https://api.hubapi.com/communication-preferences/v3/status/email/{$emailAddress}";
+
+        return $this->client->request('get', $endpoint);
+    }
+
+    /**
+     * Subscribe a contact to a given subscription type.
+     *
+     * @see https://developers.hubspot.com/docs/api-reference/legacy/communication-preferences/v3/subscribe-contact
+     *
+     * @param array $data
+     *
+     * @return \SevenShores\Hubspot\Http\Response
+     */
+    public function subscribe(array $data = [])
+    {
+        $endpoint = 'https://api.hubapi.com/communication-preferences/v3/subscribe';
+
+        return $this->client->request('post', $endpoint, ['json' => $data]);
+    }
+
+    /**
+     * Unsubscribe a contact from a given subscription type.
+     *
+     * @see https://developers.hubspot.com/docs/api-reference/legacy/communication-preferences/v3/unsubscribe-contact
+     *
+     * @param array $data
+     *
+     * @return \SevenShores\Hubspot\Http\Response
+     */
+    public function unsubscribe(array $data = [])
+    {
+        $endpoint = 'https://api.hubapi.com/communication-preferences/v3/unsubscribe';
+
+        return $this->client->request('post', $endpoint, ['json' => $data]);
+    }
+
     /**
      * Get email subscription types for a portal.
      *
