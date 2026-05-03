@@ -201,7 +201,7 @@ class Forms extends Endpoint
      */
     public function getUploadedFileById($id, $sign, array $params = [])
     {
-        $endpoint = "https://api.hubspot.com/form-integrations/v1/uploaded-files/signed-url-redirect/{$id}";
+        $endpoint = "https://api.hubapi.com/form-integrations/v1/uploaded-files/signed-url-redirect/{$id}";
         $params['sign'] = $sign;
 
         return $this->client->request(
